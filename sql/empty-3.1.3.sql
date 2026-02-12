@@ -103,9 +103,9 @@ INSERT INTO `glpi_plugin_archimap_graphlevels` ( `id` , `name` , `comment` )  VA
 INSERT INTO `glpi_plugin_archimap_graphlevels` ( `id` , `name` , `comment` )  VALUES (2,'Medium','Intermediate view');
 INSERT INTO `glpi_plugin_archimap_graphlevels` ( `id` , `name` , `comment` )  VALUES (3,'Low','Detailed view');
 
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchimapGraph','2','2','0');
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchimapGraph','6','3','0');
-INSERT INTO `glpi_displaypreferences` VALUES (NULL,'PluginArchimapGraph','7','4','0');
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchimapGraph','2','2','0');
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchimapGraph','6','3','0');
+INSERT INTO `glpi_displaypreferences` (`itemtype`, `num`, `rank`, `users_id`) VALUES ('PluginArchimapGraph','7','4','0');
 	
 -- -----------------------------------------------------
 -- Table `glpi_plugin_archimap_configs`
