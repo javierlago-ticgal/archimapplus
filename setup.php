@@ -31,15 +31,15 @@ define('PLUGIN_ARCHIMAP_MIN_GLPI', '10.0.0');
 define('PLUGIN_ARCHIMAP_MAX_GLPI', '11.0.99');
 
 // Init the hooks of the plugins -Needed
-function plugin_init_archimap() {
+function plugin_init_archimap_plus() {
    global $PLUGIN_HOOKS;
 
-   $PLUGIN_HOOKS['csrf_compliant']['archimap'] = true;
-   $PLUGIN_HOOKS['change_profile']['archimap'] = array('PluginArchimapProfile', 'initProfile');
-   $PLUGIN_HOOKS['assign_to_ticket']['archimap'] = true;
+   $PLUGIN_HOOKS['csrf_compliant']['archimap_plus'] = true;
+   $PLUGIN_HOOKS['change_profile']['archimap_plus'] = array('PluginArchimapProfile', 'initProfile');
+   $PLUGIN_HOOKS['assign_to_ticket']['archimap_plus'] = true;
    
-   //$PLUGIN_HOOKS['assign_to_ticket_dropdown']['archimap'] = true;
-   //$PLUGIN_HOOKS['assign_to_ticket_itemtype']['archimap'] = array('PluginArchimapGraph_Item');
+   //$PLUGIN_HOOKS['assign_to_ticket_dropdown']['archimap_plus'] = true;
+   //$PLUGIN_HOOKS['assign_to_ticket_itemtype']['archimap_plus'] = array('PluginArchimapGraph_Item');
    
    Plugin::registerClass('PluginArchimapGraph', array(
 //         'linkgroup_tech_types'   => true,
@@ -60,12 +60,12 @@ function plugin_init_archimap() {
       if ($plugin->isActivated('fields')
       && Session::haveRight("plugin_archimap", READ))
       {
-         $PLUGIN_HOOKS['plugin_fields']['archimap'] = 'PluginArchimapGraph';
+         $PLUGIN_HOOKS['plugin_fields']['archimap_plus'] = 'PluginArchimapGraph';
       }
 
       if (Session::haveRight("plugin_archimap", READ)
           || Session::haveRight("config", UPDATE)) {
-         $PLUGIN_HOOKS['config_page']['archimap']        = 'front/config.php';
+         $PLUGIN_HOOKS['config_page']['archimap_plus']        = 'front/config.php';
       }
    }
 
@@ -79,32 +79,32 @@ function plugin_init_archimap() {
       $plugin = new Plugin();
       if (Session::haveRight("plugin_archimap", READ)) {
 
-         $PLUGIN_HOOKS['menu_toadd']['archimap']['assets'] = 'PluginArchimapMenu';
+         $PLUGIN_HOOKS['menu_toadd']['archimap_plus']['assets'] = 'PluginArchimapMenu';
       }
 
       if (Session::haveRight("plugin_archimap_configuration", READ)) {
 
-         $PLUGIN_HOOKS['menu_toadd']['archimap']['config'] = 'PluginArchimapConfigMenu';
+         $PLUGIN_HOOKS['menu_toadd']['archimap_plus']['config'] = 'PluginArchimapConfigMenu';
       }
 
       if (Session::haveRight("plugin_archimap", UPDATE)) {
-         $PLUGIN_HOOKS['use_massive_action']['archimap']=1;
+         $PLUGIN_HOOKS['use_massive_action']['archimap_plus']=1;
       }
 
       if (class_exists('PluginArchimapGraph_Item')) { // only if plugin activated
-         $PLUGIN_HOOKS['plugin_datainjection_populate']['archimap'] = 'plugin_datainjection_populate_archimap';
+         $PLUGIN_HOOKS['plugin_datainjection_populate']['archimap_plus'] = 'plugin_datainjection_populate_archimap';
       }
 
       // End init, when all types are registered
-      $PLUGIN_HOOKS['post_init']['archimap'] = 'plugin_archimap_postinit';
+      $PLUGIN_HOOKS['post_init']['archimap_plus'] = 'plugin_archimap_plus_postinit';
 
       // Import from Data_Injection plugin
-      $PLUGIN_HOOKS['migratetypes']['archimap'] = 'plugin_datainjection_migratetypes_archimap';
+      $PLUGIN_HOOKS['migratetypes']['archimap_plus'] = 'plugin_datainjection_migratetypes_archimap_plus';
    }
 }
 
 // Get the name and the version of the plugin - Needed
-function plugin_version_archimap() {
+function plugin_version_archimap_plus() {
 
    return array (
       'name' => _n('Diagram', 'Diagrams', 2, 'archimap'),
@@ -124,16 +124,16 @@ function plugin_version_archimap() {
 }
 
 // Optional : check prerequisites before install : may print errors or add to message after redirect
-function plugin_archimap_check_prerequisites() {
+function plugin_archimap_plus_check_prerequisites() {
    return true;
 }
 
 // Uninstall process for plugin : need to return true if succeeded : may display messages or add to message after redirect
-function plugin_archimap_check_config() {
+function plugin_archimap_plus_check_config() {
    return true;
 }
 
-function plugin_datainjection_migratetypes_archimap($types) {
+function plugin_datainjection_migratetypes_archimap_plus($types) {
    $types[2400] = 'PluginArchimapGraph';
    return $types;
 }
