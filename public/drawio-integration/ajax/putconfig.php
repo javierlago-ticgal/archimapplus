@@ -53,6 +53,6 @@ echo json_encode($datas);
 // if one key = STYLE, write all styles into a file
 if ($nbstyles)
 {
-    include (Plugin::getPhpDir("archimap_plus")."/public/drawio-integration/ajax/copystylestofile.php"); // copy STYLE entries into file
+    include (Plugin::getPhpDir("archimapplus")."/public/drawio-integration/ajax/copystylestofile.php"); // copy STYLE entries into file
 }
 ?>

@@ -1,6 +1,6 @@
 <root>
 	<name>Diagrams</name>
-	<key>archimap_plus</key>
+	<key>archimapplus</key>
 	<state>stable</state>
 	<!-- stable | unstable | beta | alpha -->
 	<logo>https://raw.githubusercontent.com/ericferon/glpi-archimap/master/graph.png</logo>

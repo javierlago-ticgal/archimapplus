@@ -105,7 +105,7 @@ class PluginArchimapDiagram extends CommonDBChild {
 		}
 //		get list of file names in drawio-integration/libraries to upload custom libraries
 		$customlibs = [];
-		$customlibslist = glob(Plugin::getPhpDir("archimap_plus").'/public/drawio-integration/libraries/*.xml');
+		$customlibslist = glob(Plugin::getPhpDir("archimapplus").'/public/drawio-integration/libraries/*.xml');
 		if ($customlibslist) {
 			foreach ($customlibslist as $filename) 
 			{	$p = pathinfo($filename);
@@ -116,7 +116,7 @@ class PluginArchimapDiagram extends CommonDBChild {
 //		echo "<script type=\"text/javascript\">$('*[class^=\"ge\"]').css('display', 'inherit');</script>\n";
 //		create a "user" javascript object for passing GLPI user name, role and language
 		echo "<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>\n"; // to solve error message "jQuery is not defined" (cfr https://stackoverflow.com/questions/45741173/jquery-is-not-defined-within-jquery-ui)
-		echo "<script type=\"text/javascript\">window.plugin_rootdir = '".Plugin::getPhpDir("archimap_plus")."';</script>\n"; // plugin's root dir
+		echo "<script type=\"text/javascript\">window.plugin_rootdir = '".Plugin::getPhpDir("archimapplus")."';</script>\n"; // plugin's root dir
 		echo "<script type=\"text/javascript\">var user = {}; user.name = '".$_SESSION['glpiname']."'; user.role = '".$_SESSION['glpiactiveprofile']['name']."'; user.language = '".$_SESSION['glpilanguage']."'; user.user_token = '".User::getToken($_SESSION['glpiID'], 'api_token')."';user.csrf_token = '".Session::getNewCSRFToken()."'; user.app_token = '".$app_token."';</script>\n"; // get active profile name (e.g "super-admin", ...)
 //		create a "customlibs" javascript object for passing an array of custom libraries
 		echo "<script type=\"text/javascript\">var customlibs = ".json_encode($customlibs).";</script>\n"; // get list of file names in drawio-integration/libraries to upload custom libraries
@@ -130,7 +130,7 @@ class PluginArchimapDiagram extends CommonDBChild {
 		echo "<script type=\"text/javascript\" src=\"../public/grapheditorbody.js\"></script>\n";
 		echo "</div>\n";
 
-		require_once Plugin::getPhpDir("archimap_plus")."/public/drawio-integration/ext/js-fileexplorer/server-side-helpers/file_explorer_fs_helper.php";
+		require_once Plugin::getPhpDir("archimapplus")."/public/drawio-integration/ext/js-fileexplorer/server-side-helpers/file_explorer_fs_helper.php";
 
 		$options = array(
 		"base_url" => (version_compare(GLPI_VERSION,'10.0.99','le')) ? Plugin::getWebDir("archimap")."/public/drawio-integration/images/" : $CFG_GLPI['root_doc'] . "/plugins/archimap/public/drawio-integration/images/",
@@ -140,7 +140,7 @@ class PluginArchimapDiagram extends CommonDBChild {
 		"dot_folders" => false,  // .git, .svn, .DS_Store
 		"allowed_exts" => ".jpg, .jpeg, .png, .gif, .svg, .txt",
 		"allow_empty_ext" => false,
-		"thumbs_dir" => Plugin::getPhpDir("archimap_plus")."/public/drawio-integration/images",
+		"thumbs_dir" => Plugin::getPhpDir("archimapplus")."/public/drawio-integration/images",
 		"thumbs_url" => (version_compare(GLPI_VERSION,'10.0.99','le')) ? Plugin::getWebDir("archimap")."/public/drawio-integration/images/" : $CFG_GLPI['root_doc'] . "/plugins/archimap/public/drawio-integration/images/",
 //		"thumb_create_url" => "https://localhost/fileexplorer?action=file_explorer_thumbnail&xsrftoken=qwerasdf",
 		"refresh" => true,
@@ -161,7 +161,7 @@ class PluginArchimapDiagram extends CommonDBChild {
 		"delete" => false
 	);
 
-		FileExplorerFSHelper::HandleActions("file_explorer_refresh", "file_explorer_", Plugin::getPhpDir("archimap_plus")."/public/drawio-integration/images", $options);
+		FileExplorerFSHelper::HandleActions("file_explorer_refresh", "file_explorer_", Plugin::getPhpDir("archimapplus")."/public/drawio-integration/images", $options);
 
 
 //      $options['candel'] = false;
