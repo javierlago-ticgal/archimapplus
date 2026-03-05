@@ -1879,9 +1879,9 @@ App.prototype.getPeerForMode = function(mode)
 			imageMenu.style.position = 'absolute';
 			imageMenu.style.right = '50px';
 
-			const regex = /^.*(\/archimap)/;
-			const regex2 = /\/archimap.*/;
-			const regex3 = /^.*(\/.*\/archimap)/;
+			const regex = /^.*(\/archimap(?:_plus)?)/;
+			const regex2 = /\/archimap(?:_plus)?.*/;
+			const regex3 = /^.*(\/.*\/archimap(?:_plus)?)/;
 			var fileExplorerDialog = function(path) {
 					var fileExplorer = document.createElement('div');
 					var options = {
