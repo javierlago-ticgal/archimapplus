@@ -39,6 +39,26 @@ class PluginArchimapConfig extends CommonDBTM {
       return __('Diagrams configuration', "archimap");
    }
 
+   static function getFormURL($full = true) {
+      global $CFG_GLPI;
+
+      $url = '/plugins/archimapplus/front/config.form.php';
+      if ($full) {
+         return $CFG_GLPI['root_doc'].$url;
+      }
+      return $url;
+   }
+
+   static function getSearchURL($full = true) {
+      global $CFG_GLPI;
+
+      $url = '/plugins/archimapplus/front/config.php';
+      if ($full) {
+         return $CFG_GLPI['root_doc'].$url;
+      }
+      return $url;
+   }
+
    // search fields from GLPI 9.3 on
    function rawSearchOptions() {
 

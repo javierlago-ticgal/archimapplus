@@ -31,15 +31,17 @@ else
 
 $DB = new DB;
 $tablefields = file_get_contents('php://input');
-if (isset($tablefields)) {
-	$tablefields = json_decode($tablefields);
-} else {
-    die("No 'tablefields' contained in body of POST request 'showcolumns'");
+$tablefields = (is_string($tablefields) && trim($tablefields) !== '') ? json_decode($tablefields) : [];
+if (!is_array($tablefields) && !is_object($tablefields)) {
+   $tablefields = [];
 }
 $datas = [];
 foreach($tablefields as $id => $criteria) {
+	if (!isset($criteria->table)) {
+		continue;
+	}
 	$table = $criteria->table;
-	$where = $criteria->where;
+	$where = $criteria->where ?? '';
 	$query = "SHOW COLUMNS FROM $table";
 	if ($where)
 		$query .= " WHERE ".$where;

@@ -31,10 +31,9 @@ else
 
 // receive parameters into Http body
 $params = file_get_contents('php://input');
-if (isset($params)) {
-	$params = json_decode($params);
-} else {
-    die("No parameters contained in body of POST request 'updategraph'");
+$params = (is_string($params) && trim($params) !== '') ? json_decode($params) : [];
+if (!is_array($params) && !is_object($params)) {
+   $params = [];
 }
 // Put parameters into $_POST
 foreach($params as $key => $value) {

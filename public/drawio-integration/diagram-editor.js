@@ -11,7 +11,7 @@
 // Public global variables
 window.MAX_REQUEST_SIZE = window.MAX_REQUEST_SIZE  || 10485760;
 window.MAX_AREA = window.MAX_AREA || 15000 * 15000;
-window.DRAWIOINTEGRATION_PATH = '../drawio-integration';
+window.DRAWIOINTEGRATION_PATH = window.DRAWIOINTEGRATION_PATH || '../public/drawio-integration';
 //window.DRAWIOINTEGRATION_PATH = '..';
 
 // hide header, footer and  glpi_tabs div, for full page drawing pane
@@ -193,7 +193,7 @@ DiagramEditor.prototype.editElement = function(elem)
 										success(datas, libconfig);
 									}
 								};
-								xhr3.open("POST", /* window.DRAWIOINTEGRATION_PATH +*/ "../../archimap/public/drawio-integration/ajax/getconfig.php", true);
+								xhr3.open("POST", window.DRAWIOINTEGRATION_PATH + "/ajax/getconfig.php", true);
 								xhr3.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 //								xhr3.setRequestHeader("Session-Token", user.session_token);
 								xhr3.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -719,7 +719,7 @@ DiagramEditor.prototype.done = function(data, draft, elt)
 //									this.setStatus('errorSavingFile', true);
 								}	
 							}; 
-							xhr.open("POST", /*window.DRAWIOINTEGRATION_PATH +*/ "../../archimap/public/drawio-integration/ajax/updategraph.php", false);
+							xhr.open("POST", window.DRAWIOINTEGRATION_PATH + "/ajax/updategraph.php", false);
 							xhr.setRequestHeader("Content-Type", "application/json");
 //							xhr.setRequestHeader("Session-Token", user.session_token);
 							xhr.setRequestHeader("X-Requested-With", "XMLHttpRequest");

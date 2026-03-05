@@ -25,7 +25,7 @@
 /**
  * Link to repository plugin.
  */
-window.DRAWIOINTEGRATION_PATH = '../../../../drawio-integration';
+window.DRAWIOINTEGRATION_PATH = window.DRAWIOINTEGRATION_PATH || '../../../../drawio-integration';
 Draw.loadPlugin(function(ui)
 {
 //	console.log('entering link2repo plugin', ui);
@@ -1879,9 +1879,9 @@ App.prototype.getPeerForMode = function(mode)
 			imageMenu.style.position = 'absolute';
 			imageMenu.style.right = '50px';
 
-			const regex = /^.*(\/archimap)/;
-			const regex2 = /\/archimap.*/;
-			const regex3 = /^.*(\/.*\/archimap)/;
+			const regex = /^.*(\/archimapplus|\/archimap)/;
+			const regex2 = /\/archimapplus.*|\/archimap.*/;
+			const regex3 = /^.*(\/.*\/archimapplus|\/.*\/archimap)/;
 			var fileExplorerDialog = function(path) {
 					var fileExplorer = document.createElement('div');
 					var options = {

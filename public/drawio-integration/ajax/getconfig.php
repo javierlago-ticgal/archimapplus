@@ -32,13 +32,15 @@ else
 $forbidden_tables = ['glpi_users', 'glpi_authldaps', 'glpi_authmails', 'glpi_certificates'];
 $DB = new DB;
 $tables = file_get_contents('php://input');
-if (isset($tables)) {
-	$tables = json_decode($tables);
-} else {
-    die("No query parameters contained in body of POST request 'getconfig'");
+$tables = (is_string($tables) && trim($tables) !== '') ? json_decode($tables) : [];
+if (!is_array($tables) && !is_object($tables)) {
+   $tables = [];
 }
 $datas = [];
 foreach($tables as $key => $tablecolumn) {
+	if (!isset($tablecolumn->column)) {
+		continue;
+	}
 	$table = "glpi_plugin_archimap_configs";
 	$columns = explode(",", str_replace(' ', '', $tablecolumn->column)); // suppress spaces and split on comma
 	if (isset($tablecolumn->type))

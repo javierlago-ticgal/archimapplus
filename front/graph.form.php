@@ -37,7 +37,15 @@ $graph_item=new PluginArchimapGraph_Item();
 if (isset($_POST["add"])) {
 
    $graph->check(-1, CREATE,$_POST);
-   $newID=$graph->add($_POST);
+   $input = $_POST;
+   $newID=$graph->add($input);
+   if (!$newID && !empty($input['name'])) {
+      $basename = $input['name'];
+      for ($suffix = 2; $suffix <= 100 && !$newID; $suffix++) {
+         $input['name'] = $basename.' ('.$suffix.')';
+         $newID = $graph->add($input);
+      }
+   }
    if ($_SESSION['glpibackcreated']) {
       Html::redirect($graph->getFormURL()."?id=".$newID);
    }

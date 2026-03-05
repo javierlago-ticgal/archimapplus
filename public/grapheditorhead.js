@@ -131,7 +131,7 @@
 		window.mxBasePath = window.DRAWIO_WEBAPP + '/mxgraph';
 		window.mxLoadStylesheets = false;
 		window.REALTIME_URL = window.REALTIME_URL || (window.DRAWIO_WEBAPP + 'cache');
-		window.DRAWIOINTEGRATION_PATH = '../public/drawio-integration';
+		window.DRAWIOINTEGRATION_PATH = window.DRAWIOINTEGRATION_PATH || '../public/drawio-integration';
 // End of Modified EFE 20200930
 
 		// Forces CDN caches by passing URL parameters via URL hash

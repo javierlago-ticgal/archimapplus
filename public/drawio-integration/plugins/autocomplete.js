@@ -22,7 +22,7 @@
  along with Archimap. If not, see <http://www.gnu.org/licenses/>.
  --------------------------------------------------------------------------
  */
-window.DRAWIOINTEGRATION_PATH = '../../../../drawio-integration';
+window.DRAWIOINTEGRATION_PATH = window.DRAWIOINTEGRATION_PATH || '../../../../drawio-integration';
 window.EXPORT_URL = 'https://convert.diagrams.net/node/export';
 window.ROOT_PATH = window.location.protocol + '//' + window.location.hostname;
 window.ROOT_PATH += (window.location.port && window.location.port != "") ? ':' + window.location.port : '';

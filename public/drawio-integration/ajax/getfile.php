@@ -37,7 +37,12 @@ if (!defined('GLPI_ROOT'))
 else
    include_once (GLPI_ROOT.'/inc/includes.php');
 
-$allowed_dirs = ['archimap/public/drawio-integration/images', 'archimap/public/drawio/src/main/webapp/img'];
+$allowed_dirs = [
+	'archimapplus/public/drawio-integration/images',
+	'archimapplus/public/drawio/src/main/webapp/img',
+	'archimap/public/drawio-integration/images',
+	'archimap/public/drawio/src/main/webapp/img'
+];
 if (isset($_GET['dir'])) {
 	$dir = $_GET['dir'];
 //	check that dir is allowed
@@ -51,7 +56,15 @@ if (isset($_GET['dir'])) {
 	}
 	if ($allowed)
 	{
-		$rootdir = substr($_SERVER['SCRIPT_FILENAME'], 0, strpos($_SERVER['SCRIPT_FILENAME'], '/archimap'));
+		$script_filename = $_SERVER['SCRIPT_FILENAME'];
+		$position = strpos($script_filename, '/archimapplus');
+		if ($position === false) {
+			$position = strpos($script_filename, '/archimap');
+		}
+		if ($position === false) {
+			die("Unable to resolve plugin root directory in 'getfile.php'");
+		}
+		$rootdir = substr($script_filename, 0, $position);
 		$directories = glob($rootdir.$dir.'/*', GLOB_ONLYDIR);
 	}
 	else
