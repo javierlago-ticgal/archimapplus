@@ -24,31 +24,31 @@
  --------------------------------------------------------------------------
  */
 
-function plugin_archimapplus_install() {
+function plugin_archimap_plus_install() {
    global $DB, $CFG_GLPI;
 
-   include_once (Plugin::getPhpDir("archimapplus")."/inc/profile.class.php");
+   include_once (Plugin::getPhpDir("archimap_plus")."/inc/profile.class.php");
 
    $update=false;
    if ($DB->TableExists("glpi_plugin_archiapp_graphs")) {
       
-      $DB->runFile(Plugin::getPhpDir("archimapplus")."/sql/update-1.0.0.sql");
+      $DB->runFile(Plugin::getPhpDir("archimap_plus")."/sql/update-1.0.0.sql");
 
    }
    if (!$DB->TableExists("glpi_plugin_archimap_graphs")) {
 
-      $DB->runFile(Plugin::getPhpDir("archimapplus")."/sql/empty-3.1.3.sql");
+      $DB->runFile(Plugin::getPhpDir("archimap_plus")."/sql/empty-3.1.3.sql");
 	}
 	else {
 		if ($DB->TableExists("glpi_plugin_archimap_graphs") && !$DB->TableExists("glpi_plugin_archimap_configs")) {
 			$update=true;
-         $DB->runFile(Plugin::getPhpDir("archimapplus")."/sql/update-3.0.0.sql");
+         $DB->runFile(Plugin::getPhpDir("archimap_plus")."/sql/update-3.0.0.sql");
 		}
 		if ($DB->TableExists("glpi_plugin_archimap_configs")
 		&& ($DB->numrows($DB->doQuery("SELECT * from glpi_plugin_archimap_configs where type = 'APP_TOKEN'")) == 0))
-         $DB->runFile(Plugin::getPhpDir("archimapplus")."/sql/update-3.1.0.sql");
+         $DB->runFile(Plugin::getPhpDir("archimap_plus")."/sql/update-3.1.0.sql");
         // change path to images as ...archimap/public/drawio-integration/...
-      $DB->runFile(Plugin::getPhpDir("archimapplus")."/sql/update-3.1.1.sql");
+      $DB->runFile(Plugin::getPhpDir("archimap_plus")."/sql/update-3.1.1.sql");
 	}
 
    
@@ -77,7 +77,7 @@ function plugin_archimapplus_install() {
    }
    
 	if ($DB->TableExists("glpi_plugin_archimap_configs")) {
-      include (Plugin::getPhpDir("archimapplus")."/ajax/copystylestodb.php");
+      include (Plugin::getPhpDir("archimap_plus")."/ajax/copystylestodb.php");
 	}
 
    if ($update) {
@@ -118,11 +118,11 @@ function plugin_archimapplus_install() {
    return true;
 }
 
-function plugin_archimapplus_uninstall() {
+function plugin_archimap_plus_uninstall() {
    global $DB;
    
-   include_once (Plugin::getPhpDir("archimapplus")."/inc/profile.class.php");
-   include_once (Plugin::getPhpDir("archimapplus")."/inc/menu.class.php");
+   include_once (Plugin::getPhpDir("archimap_plus")."/inc/profile.class.php");
+   include_once (Plugin::getPhpDir("archimap_plus")."/inc/menu.class.php");
    
 	$tables = array("glpi_plugin_archimap_graphs",
 					"glpi_plugin_archimap_graphs_items",
@@ -160,21 +160,21 @@ function plugin_archimapplus_uninstall() {
    return true;
 }
 
-function plugin_archimapplus_postinit() {
+function plugin_archimap_plus_postinit() {
    global $PLUGIN_HOOKS;
 
-   $PLUGIN_HOOKS['item_purge']['archimapplus'] = [];
+   $PLUGIN_HOOKS['item_purge']['archimap_plus'] = [];
 
    foreach (PluginArchimapGraph::getTypes(true) as $type) {
 
-      $PLUGIN_HOOKS['item_purge']['archimapplus'][$type]
+      $PLUGIN_HOOKS['item_purge']['archimap_plus'][$type]
          = array('PluginArchimapGraph_Item','cleanForItem');
 
       CommonGLPI::registerStandardTab($type, 'PluginArchimapGraph_Item');
    }
 }
 
-function plugin_archimapplus_AssignToTicket($types) {
+function plugin_archimap_plus_AssignToTicket($types) {
 
    if (Session::haveRight("plugin_archimap_open_ticket", READ)) {
       $types['PluginArchimapGraph']=PluginArchimapGraph::getTypeName(2);
@@ -183,7 +183,7 @@ function plugin_archimapplus_AssignToTicket($types) {
 }
 
 
-function plugin_archimapplus_AssignToTicketDropdown($data) {
+function plugin_archimap_plus_AssignToTicketDropdown($data) {
    global $DB, $CFG_GLPI;
 
    if ($data['itemtype'] == 'PluginArchimapGraph') {
@@ -233,7 +233,7 @@ function plugin_archimapplus_AssignToTicketDropdown($data) {
 }
 
 
-function plugin_archimapplus_AssignToTicketDisplay($data) {
+function plugin_archimap_plus_AssignToTicketDisplay($data) {
    global $DB;
 
    if ($data['itemtype'] == 'PluginArchimapGraph_Item') {
@@ -281,7 +281,7 @@ function plugin_archimapplus_AssignToTicketDisplay($data) {
 }
 
 
-function plugin_archimapplus_AssignToTicketGiveItem($data) {
+function plugin_archimap_plus_AssignToTicketGiveItem($data) {
    if ($data['itemtype'] == 'PluginArchimapGraph_Item') {
       $paGraph = new PluginArchimapGraph();
       $paGraph_item = new PluginArchimapGraph_Item();
@@ -298,10 +298,10 @@ function plugin_archimapplus_AssignToTicketGiveItem($data) {
 
 
 // Define dropdown relations
-function plugin_archimapplus_getGraphRelations() {
+function plugin_archimap_plus_getGraphRelations() {
 
    $plugin = new Plugin();
-   if ($plugin->isActivated("archimapplus"))
+   if ($plugin->isActivated("archimap_plus"))
 		return array("glpi_plugin_archimap_graphs"=>array("glpi_plugin_archimap_graphs_items"=>"plugin_archimap_graphs_id"),
 					 "glpi_plugin_archimap_types"=>array("glpi_plugin_archimap_graphs"=>"plugin_archimap_types_id"),
 					 "glpi_plugin_archimap_states"=>array("glpi_plugin_archimap_graphs"=>"plugin_archimap_states_id"),
@@ -314,10 +314,10 @@ function plugin_archimapplus_getGraphRelations() {
 }
 
 // Define Dropdown tables to be manage in GLPI :
-function plugin_archimapplus_getDropdown() {
+function plugin_archimap_plus_getDropdown() {
 
    $plugin = new Plugin();
-   if ($plugin->isActivated("archimapplus"))
+   if ($plugin->isActivated("archimap_plus"))
 		return array('PluginArchimapGraphstate'=>PluginArchimapGraphstate::getTypeName(2),
                 'PluginArchimapGraphtype'=>PluginArchimapGraphtype::getTypeName(2) //getTypeName(2) does not work
                 );
@@ -327,7 +327,7 @@ function plugin_archimapplus_getDropdown() {
 
 ////// SEARCH FUNCTIONS ///////() {
 
-function plugin_archimapplus_getAddSearchOptions($itemtype) {
+function plugin_archimap_plus_getAddSearchOptions($itemtype) {
 
    $sopt=[];
 
@@ -382,7 +382,7 @@ function plugin_archimapplus_getAddSearchOptions($itemtype) {
    return $sopt;
 }
 
-function plugin_archimapplus_giveItem($type,$ID,$data,$num) {
+function plugin_archimap_plus_giveItem($type,$ID,$data,$num) {
    global $DB;
 
    $searchopt=&Search::getOptions($type);
@@ -466,10 +466,10 @@ function plugin_archimapplus_giveItem($type,$ID,$data,$num) {
 
 ////// SPECIFIC MODIF MASSIVE FUNCTIONS ///////
 
-function plugin_archimapplus_MassiveActions($type) {
+function plugin_archimap_plus_MassiveActions($type) {
 
     $plugin = new Plugin();
-   if ($plugin->isActivated('archimapplus')) {
+   if ($plugin->isActivated('archimap_plus')) {
         if (in_array($type,PluginArchimapGraph::getTypes(true))) {
             return ['PluginArchimapGraph'.MassiveAction::CLASS_ACTION_SEPARATOR.'plugin_archimap_add_item' =>
                                                               __('Associate to the diagram', 'archimap')];
@@ -526,7 +526,7 @@ function plugin_archimap_MassiveActionsProcess($data) {
 */
 function plugin_datainjection_populate_graphs() {
    global $INJECTABLE_TYPES;
-   $INJECTABLE_TYPES['PluginArchimapGraphInjection'] = 'archimapplus';
+   $INJECTABLE_TYPES['PluginArchimapGraphInjection'] = 'archimap_plus';
 }
 
 /*
