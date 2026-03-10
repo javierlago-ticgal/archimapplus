@@ -1,6 +1,6 @@
 #!/bin/bash
 
-PLUGINNAME="rcsangola"
+PLUGINNAME="archimapplus"
 
 if [ ! "$#" -eq 2 ]
 then
